@@ -11,8 +11,8 @@ import java.io.IOException;
 @Component
 public class TelegramController extends TelegramLongPollingBot {
     private final String BOT_USERNAME = "Weather_mb_test_bot";
-    private final String BOT_TOKEN = "7478444279:AAFni95KMeR6vEpShYqUEJHl2sGPE0dw1O0";
-    private ApiParse apiParse = new ApiParse();
+    private final String BOT_TOKEN = "******";
+    ApiParse apiParse = new ApiParse();
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasLocation()) {
