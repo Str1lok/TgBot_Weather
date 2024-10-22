@@ -7,14 +7,15 @@ public class PrintWeatherData {
 
     public String formatForecastData(JsonObject forecastData) {
         StringBuilder forecast = new StringBuilder();
-        JsonArray list = forecastData.getAsJsonArray("list");
-        for (int i = 0; i < 8; i++) {
-            JsonObject item = list.get(i).getAsJsonObject();
-            JsonObject main = item.getAsJsonObject("main");
-            JsonArray weatherArray = item.getAsJsonArray("weather");
-            JsonObject weather = weatherArray.get(0).getAsJsonObject();
-            String time = item.get("dt_txt").getAsString();
-            forecast.append(time.substring(11, 16)).append(": ").append(main.get("temp").getAsDouble()).append("°C, ").append(weather.get("description").getAsString()).append("\n");
+        JsonObject hourlyData = forecastData.getAsJsonObject("hourly");
+        JsonArray temperatureArray = hourlyData.getAsJsonArray("temperature_2m");
+
+        if (temperatureArray != null) {
+            for (int i = 0; i < temperatureArray.size(); i++) {
+                float temp = temperatureArray.get(i).getAsFloat();
+                String temp_string = Float.toString(temp);
+                forecast.append(temp_string).append("°C, ").append("\n");
+            }
         }
         return "Прогноз на сутки:\n" + forecast;
     }

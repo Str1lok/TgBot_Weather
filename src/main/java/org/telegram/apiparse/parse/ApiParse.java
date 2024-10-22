@@ -14,10 +14,10 @@ import java.net.URL;
 public class ApiParse {
     PrintWeatherData pwd = new PrintWeatherData();
     private final String apiKey = "a64ea4780f14fda8a8a29fa9fec1b259";
-    private final String apiUrl = "https://api.openweathermap.org/data/2.5/weather?";
+    private final String apiUrl = "https://api.open-meteo.com/v1/forecast?"; // "https://api.openweathermap.org/data/2.5/weather?";
     public String getApiResponse(String url) throws IOException {
-        URL apiUrl = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+        URL apiURL = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) apiURL.openConnection();
         connection.setRequestMethod("GET");
         connection.connect();
 
@@ -47,10 +47,10 @@ public class ApiParse {
     }
     private String buildForecastUrl(double latitude, double longitude) {
         return apiUrl +
-                "lat=" + latitude +
-                "&lon=" + longitude +
-                "&appid=" + apiKey +
-                "&units=metric";
+                "latitude=" + latitude +
+                "&longitude=" + longitude + "&hourly=temperature_2m&timezone=auto&forecast_days=1";
+                // "&appid=" + apiKey +
+                // "&units=metric";
     }
     public JsonObject parseJson(String jsonResponse) {
         if (jsonResponse != null) {
@@ -59,11 +59,12 @@ public class ApiParse {
         }
         return null;
     }
-    public void sendWeatherResponse(Long chatId, String message) {
+    public SendMessage sendWeatherResponse(Long chatId, String message) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText(message);
         System.out.println(sendMessage);
+        return sendMessage;
     }
     public void sendErrorMessage(Long chatId) {
         SendMessage sendMessage = new SendMessage();
