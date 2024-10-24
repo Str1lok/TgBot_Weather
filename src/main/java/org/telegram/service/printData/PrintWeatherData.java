@@ -1,7 +1,8 @@
-package org.telegram.apiparse.printData;
+package org.telegram.service.printData;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 public class PrintWeatherData {
 
@@ -18,5 +19,18 @@ public class PrintWeatherData {
             }
         }
         return "Прогноз на сутки:\n" + forecast;
+    }
+    public SendMessage sendWeatherResponse(Long chatId, String message) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(message);
+        System.out.println(sendMessage);
+        return sendMessage;
+    }
+    public void sendErrorMessage(Long chatId) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        sendMessage.setText("Ошибка получения данных о погоде. Попробуйте позже.");
+        System.out.println(sendMessage);
     }
 }
