@@ -1,5 +1,6 @@
 package org.telegram.bot.conroller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.apiparse.ApiParse;
 import org.telegram.service.printData.PrintWeatherData;
@@ -14,7 +15,8 @@ import java.io.IOException;
 @Component
 public class TelegramController extends TelegramLongPollingBot {
     private final String BOT_USERNAME = "Weather_mb_test_bot";
-    private final String BOT_TOKEN = "7478444279:AAFni95KMeR6vEpShYqUEJHl2sGPE0dw1O0";
+    @Value("${ACTIVE_TOKEN}")
+    private String BOT_TOKEN;
     ApiParse apiParse = new ApiParse();
     PrintWeatherData print = new PrintWeatherData();
     @Override
